@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<!-- NAVBAR -->
+
+<nav class="bg-blue-600 text-white p-4 flex justify-between">
+
+    <h1 class="text-2xl font-bold">
+        SISTec IoT Application 2026
+    </h1>
+
+    <div>
+        Welcome, {{username}}
+
+        <a
+            href="/logout"
+            class="ml-4 bg-red-500 px-4 py-2 rounded"
+        >
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+<div class="p-6">
+
+    <!-- SECTION 1 -->
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <div class="bg-white p-6 rounded-xl shadow">
+
+            <h2 class="text-xl font-bold mb-4">
+                Latest Temperature
+            </h2>
+
+            <p class="text-6xl font-bold text-blue-500">
+                {{latest_temp}} °C
+            </p>
+
+            <p class="mt-4">
+                {{latest_time}} | {{latest_date}}
+            </p>
+
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow">
+
+            <h2 class="text-xl font-bold mb-4">
+                Latest Humidity
+            </h2>
+
+            <p class="text-6xl font-bold text-green-500">
+                {{latest_humidity}} %
+            </p>
+
+            <p class="mt-4">
+                {{latest_time}} | {{latest_date}}
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- SECTION 2 -->
+
+    <div class="bg-white p-6 rounded-xl shadow mt-8">
+
+        <h2 class="text-2xl font-bold mb-4">
+            LCD Display Text
+        </h2>
+
+        <form action="/save-lcd" method="POST">
+
+            <input
+                type="text"
+                name="text"
+                maxlength="16"
+                placeholder="Enter LCD Text"
+                class="w-full border p-4 rounded mb-4 text-xl"
+                required
+            >
+
+            <button
+                class="bg-blue-500 text-white px-6 py-3 rounded"
+            >
+                Save Text
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- SECTION 3 -->
+
+    <div class="bg-white p-6 rounded-xl shadow mt-8 overflow-auto">
+
+        <h2 class="text-2xl font-bold mb-4">
+            Sensor Records
+        </h2>
+
+        <table class="w-full border">
+
+            <tr class="bg-gray-200">
+
+                <th class="border p-3">#</th>
+                <th class="border p-3">Temperature</th>
+                <th class="border p-3">Humidity</th>
+                <th class="border p-3">Time</th>
+                <th class="border p-3">Date</th>
+                <th class="border p-3">Action</th>
+
+            </tr>
+
+            {% for row in records %}
+
+            <tr>
+
+                <td class="border p-3">{{row[0]}}</td>
+                <td class="border p-3">{{row[1]}} °C</td>
+                <td class="border p-3">{{row[2]}} %</td>
+                <td class="border p-3">{{row[3]}}</td>
+                <td class="border p-3">{{row[4]}}</td>
+
+                <td class="border p-3">
+
+                    <a
+                        href="/delete/{{row[0]}}"
+                        class="bg-red-500 text-white px-4 py-2 rounded"
+                    >
+                        Delete
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>
