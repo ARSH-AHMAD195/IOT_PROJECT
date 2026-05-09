@@ -47,7 +47,10 @@ conn.commit()
 
 @app.get("/", response_class=HTMLResponse)
 def login_page(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(
+    request=request,
+    name="index.html"
+)
 
 # =========================
 # REGISTER PAGE
@@ -55,7 +58,10 @@ def login_page(request: Request):
 
 @app.get("/register", response_class=HTMLResponse)
 def register_page(request: Request):
-    return templates.TemplateResponse("register.html", {"request": request})
+    return templates.TemplateResponse(
+    request=request,
+    name="register.html"
+)
 
 # =========================
 # REGISTER USER
@@ -137,9 +143,9 @@ def dashboard(request: Request):
     records = cursor.fetchall()
 
     return templates.TemplateResponse(
-        "dashboard.html",
-        {
-            "request": request,
+        request=request,
+        name="dashboard.html",
+        context={
             "username": username,
             "latest_temp": latest_temp,
             "latest_humidity": latest_humidity,
